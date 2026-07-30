@@ -1,0 +1,424 @@
+:root {
+    --navy: #102a43;
+    --blue: #1976d2;
+    --blue-dark: #125ea9;
+    --sky: #e8f4ff;
+    --surface: rgba(255, 255, 255, 0.94);
+    --muted: #627d98;
+    --line: #d9e7f3;
+    --danger: #b42318;
+    --shadow: 0 24px 70px rgba(16, 42, 67, 0.14);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--navy);
+    background:
+        radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.9) 0 4%, transparent 22%),
+        radial-gradient(circle at 88% 12%, rgba(113, 190, 255, 0.4), transparent 24%),
+        linear-gradient(145deg, #dff2ff 0%, #f5faff 52%, #e8f5ff 100%);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body::before,
+body::after {
+    position: fixed;
+    z-index: -1;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 50%;
+    content: "";
+    filter: blur(3px);
+}
+
+body::before {
+    top: 54%;
+    left: -8rem;
+    background: rgba(25, 118, 210, 0.08);
+}
+
+body::after {
+    right: -7rem;
+    bottom: -7rem;
+    background: rgba(31, 169, 113, 0.08);
+}
+
+.page-shell {
+    width: min(100% - 2rem, 880px);
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 5rem) 0 2rem;
+}
+
+.weather-card {
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 28px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+}
+
+.hero {
+    position: relative;
+    padding: clamp(2rem, 6vw, 4rem);
+    padding-bottom: 2.25rem;
+    text-align: center;
+}
+
+.brand-mark {
+    position: relative;
+    width: 82px;
+    height: 62px;
+    margin: 0 auto 1.5rem;
+}
+
+.sun {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #ffc857;
+    box-shadow: 0 0 0 9px rgba(255, 200, 87, 0.18);
+}
+
+.cloud {
+    position: absolute;
+    bottom: 2px;
+    left: 4px;
+    width: 66px;
+    height: 28px;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 8px 18px rgba(16, 42, 67, 0.16);
+}
+
+.cloud::before,
+.cloud::after {
+    position: absolute;
+    bottom: 10px;
+    border-radius: 50%;
+    background: #fff;
+    content: "";
+}
+
+.cloud::before {
+    left: 12px;
+    width: 30px;
+    height: 30px;
+}
+
+.cloud::after {
+    right: 8px;
+    width: 22px;
+    height: 22px;
+}
+
+.eyebrow {
+    margin: 0 0 0.55rem;
+    color: var(--blue);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+    margin-top: 0;
+}
+
+h1 {
+    margin-bottom: 0.8rem;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+}
+
+.subtitle {
+    max-width: 590px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 1.02rem;
+    line-height: 1.7;
+}
+
+.prediction-form {
+    margin: 0 clamp(1.25rem, 6vw, 4rem) clamp(2rem, 5vw, 3.5rem);
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: #f8fbfe;
+}
+
+.prediction-form label {
+    display: block;
+    margin-bottom: 0.65rem;
+    font-size: 0.88rem;
+    font-weight: 750;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.8rem;
+}
+
+input,
+button {
+    min-height: 52px;
+    border-radius: 12px;
+    font: inherit;
+}
+
+input {
+    width: 100%;
+    border: 1px solid #bfd3e3;
+    padding: 0 1rem;
+    color: var(--navy);
+    background: #fff;
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
+}
+
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    border: 0;
+    padding: 0 1.4rem;
+    color: #fff;
+    background: var(--blue);
+    box-shadow: 0 8px 20px rgba(25, 118, 210, 0.2);
+    cursor: pointer;
+    font-weight: 750;
+    transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+button:hover {
+    background: var(--blue-dark);
+    box-shadow: 0 10px 24px rgba(25, 118, 210, 0.28);
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    cursor: wait;
+    opacity: 0.72;
+    transform: none;
+}
+
+.error-message {
+    margin: -1.8rem clamp(1.25rem, 6vw, 4rem) 2rem;
+    padding: 0.9rem 1rem;
+    border-radius: 12px;
+    color: var(--danger);
+    background: #fff1f0;
+    font-weight: 650;
+}
+
+.results {
+    border-top: 1px solid var(--line);
+    padding: clamp(1.5rem, 6vw, 4rem);
+    background: linear-gradient(180deg, #fafdff, #fff);
+    animation: reveal 420ms ease both;
+}
+
+.results-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.results-heading h2 {
+    margin: 0;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    letter-spacing: -0.025em;
+}
+
+.results-heading time {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.55rem 0.85rem;
+    color: var(--muted);
+    background: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.weather-summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 18px;
+    padding: 1.2rem;
+    color: #fff;
+    background: linear-gradient(135deg, #1565c0, #42a5f5);
+}
+
+.summary-icon {
+    display: grid;
+    width: 54px;
+    height: 54px;
+    place-items: center;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.17);
+    font-size: 1.8rem;
+}
+
+.weather-summary span,
+.weather-summary strong {
+    display: block;
+}
+
+.weather-summary span {
+    margin-bottom: 0.15rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.8rem;
+}
+
+.weather-summary strong {
+    font-size: 1.45rem;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+}
+
+.metric {
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.15rem;
+    background: #fff;
+}
+
+.metric-icon {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 1rem;
+    place-items: center;
+    border-radius: 9px;
+    font-size: 0.72rem;
+}
+
+.temperature-icon {
+    color: #e75b52;
+    background: #fff0ee;
+}
+
+.humidity-icon {
+    color: #1976d2;
+    background: #e8f4ff;
+}
+
+.pressure-icon {
+    color: #7b61b3;
+    background: #f3efff;
+}
+
+.rainfall-icon {
+    color: #16866a;
+    background: #e7f8f3;
+}
+
+.metric-label {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 0.35rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-overflow: ellipsis;
+}
+
+.metric strong {
+    white-space: nowrap;
+    font-size: 1.25rem;
+}
+
+.metric small {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 650;
+}
+
+.footnote {
+    margin: 1rem 0 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 700px) {
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 520px) {
+    .page-shell {
+        width: min(100% - 1rem, 880px);
+        padding-top: 0.5rem;
+    }
+
+    .weather-card {
+        border-radius: 20px;
+    }
+
+    .hero {
+        padding-inline: 1.25rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .results-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
