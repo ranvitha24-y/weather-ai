@@ -10,6 +10,7 @@ from flask import Flask, jsonify, render_template, request
 
 
 BASE_DIR = Path(__file__).resolve().parent
+DATE_FEATURES = ["Year", "Month", "Day", "DayOfYear", "DayOfWeek"]
 
 app = Flask(__name__)
 
@@ -24,9 +25,15 @@ weather_model = joblib.load(BASE_DIR / "weather_model.pkl")
 def forecast_for_date(date_text):
     """Validate a date and return predictions from all trained models."""
     try:
-        selected_date = datetime.datetime.strptime(date_text, "%Y-%m-%d")
+        selected_date = datetime.datetime.strptime(date_text, "%d-%m-%Y")
     except (TypeError, ValueError):
-        raise ValueError("Please provide a valid date in YYYY-MM-DD format.")
+        try:
+            # HTML date inputs submit ISO dates even when displayed locally.
+            selected_date = datetime.datetime.strptime(date_text, "%Y-%m-%d")
+        except (TypeError, ValueError):
+            raise ValueError(
+                "Please provide a valid date in DD-MM-YYYY format."
+            ) from None
 
     date_features = pd.DataFrame(
         [
@@ -37,7 +44,8 @@ def forecast_for_date(date_text):
                 "DayOfYear": selected_date.timetuple().tm_yday,
                 "DayOfWeek": selected_date.weekday(),
             }
-        ]
+        ],
+        columns=DATE_FEATURES,
     )
 
     return {
